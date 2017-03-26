@@ -3,14 +3,18 @@ var opcoes = {
   hostname: "localhost",
   port: "8081",
   path: "/",
+  method: 'post',
   headers : {
-    'Accept' : 'application/json'
+    'Accept' : 'application/json',
+    'Content-type' : 'application/json'
   }
 }
 
+var json = {nome : 'Jose'};
+var string_json = JSON.stringify(json);
 var buffer = [];
 
-http.get(opcoes, function(res) {
+var req = http.request(opcoes, function(res) {
 
   res.on('data', function (pedaco) {
     buffer.push(pedaco);
@@ -25,3 +29,6 @@ http.get(opcoes, function(res) {
 
   });
 });
+
+req.write(string_json);
+req.end();
